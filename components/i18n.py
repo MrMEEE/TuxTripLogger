@@ -10,3 +10,9 @@ TIME_ZONE = "Europe/Copenhagen"
 USE_I18N = True
 
 USE_TZ = True
+
+#LANGUAGES = [
+#    da-dk,
+#    en-us
+
+#]

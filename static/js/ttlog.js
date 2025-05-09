@@ -1,29 +1,21 @@
-function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-const csrftoken = getCookie('csrftoken');
+$('#logoutModal form').on('submit', function (e) {
+    e.preventDefault(); // Prevent the default form submission
 
-function csrfSafeMethod(method) {
-    // these HTTP methods do not require CSRF protection
-    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-    crossDomain: false, // obviates need for sameOrigin test
-    beforeSend: function(xhr, settings) {
-        if (!csrfSafeMethod(settings.type)) {
-            xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+    const csrfToken = $('input[name="csrfmiddlewaretoken"]').val(); // Get the token from the form
+
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        success: function (response) {
+            // Redirect or handle success
+            window.location.href = '/';
+        },
+        error: function (xhr) {
+            // Handle error
+            alert('Logout failed. Please try again.');
         }
-    }
+    });
 });
