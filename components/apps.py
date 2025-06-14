@@ -12,5 +12,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_bootstrap5",
     "widget_tweaks",
+    "django_countries",
+    "TuxTripLogger",
 
 ]
